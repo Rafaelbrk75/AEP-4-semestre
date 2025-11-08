@@ -40,6 +40,7 @@
                 v-model="form.name"
                 type="text"
                 required
+                autocomplete="name"
                 class="input-field"
                 placeholder="Seu nome completo"
               />
@@ -52,6 +53,7 @@
                 v-model="form.email"
                 type="email"
                 required
+                autocomplete="email"
                 class="input-field"
                 placeholder="seu@email.com"
               />
@@ -68,6 +70,7 @@
                 type="password"
                 required
                 minlength="6"
+                autocomplete="new-password"
                 class="input-field"
                 placeholder="Mínimo 6 caracteres"
               />
@@ -79,6 +82,7 @@
               <input
                 v-model="form.phone"
                 type="tel"
+                autocomplete="tel"
                 class="input-field"
                 placeholder="(11) 98765-4321"
               />
@@ -92,6 +96,7 @@
             <input
               v-model="form.address"
               type="text"
+              autocomplete="street-address"
               class="input-field"
               placeholder="Rua, número, bairro, cidade"
             />

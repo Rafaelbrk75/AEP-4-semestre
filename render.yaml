@@ -12,6 +12,7 @@ services:
       - key: SPRING_DATASOURCE_PASSWORD
         sync: false
     healthCheckPath: /api/ongs
+    plan: starter
 
   - type: web
     name: save-to-people-frontend
@@ -21,6 +22,7 @@ services:
     envVars:
       - key: VITE_PROXY_TARGET
         sync: false
+    plan: starter
 
   - type: pspg
     name: save-to-people-db

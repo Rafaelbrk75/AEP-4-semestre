@@ -23,6 +23,7 @@
               v-model="form.email"
               type="email"
               required
+              autocomplete="email"
               class="input-field"
               placeholder="seu@email.com"
             />
@@ -36,6 +37,7 @@
               v-model="form.password"
               type="password"
               required
+              autocomplete="current-password"
               class="input-field"
               placeholder="Digite sua senha"
             />

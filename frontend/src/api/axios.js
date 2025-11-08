@@ -1,11 +1,11 @@
 import axios from 'axios'
 
 // Create axios instance with base configuration
-// In production: use environment variable for backend URL
+// In production (Vercel): use environment variable VITE_API_URL pointing to backend URL
 // In local dev: use '/api' which Vite proxy forwards to http://localhost:8080
 // In Docker: use '/api' which Vite proxy forwards to http://backend:8080
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || '/api',
+  baseURL: import.meta.env.VITE_API_URL || import.meta.env.VITE_PROXY_TARGET || '/api',
   headers: {
     'Content-Type': 'application/json',
   },
