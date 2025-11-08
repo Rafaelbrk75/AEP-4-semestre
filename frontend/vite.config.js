@@ -19,6 +19,7 @@ export default defineConfig({
       '/api': {
         // Para desenvolvimento local: http://localhost:8080
         // Para Docker: http://backend:8080 (service name do docker-compose)
+        // Para produção: configurar no nginx.conf ou usar variável de ambiente
         target: process.env.VITE_PROXY_TARGET || 'http://localhost:8080',
         changeOrigin: true,
         secure: false,

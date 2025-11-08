@@ -1,0 +1,30 @@
+services:
+  - type: web
+    name: save-to-people-backend
+    env: docker
+    dockerfilePath: ./Dockerfile.prod
+    dockerContext: .
+    envVars:
+      - key: SPRING_DATASOURCE_URL
+        sync: false
+      - key: SPRING_DATASOURCE_USERNAME
+        sync: false
+      - key: SPRING_DATASOURCE_PASSWORD
+        sync: false
+    healthCheckPath: /api/ongs
+
+  - type: web
+    name: save-to-people-frontend
+    env: docker
+    dockerfilePath: ./frontend/Dockerfile.prod
+    dockerContext: ./frontend
+    envVars:
+      - key: VITE_PROXY_TARGET
+        sync: false
+
+  - type: pspg
+    name: save-to-people-db
+    plan: starter
+    databaseName: savetpeople
+    databaseUser: appuser
+
