@@ -15,6 +15,10 @@ const api = axios.create({
 // Request interceptor
 api.interceptors.request.use(
   (config) => {
+    // Debug: log the full URL being called
+    const fullUrl = config.baseURL + (config.url || '')
+    console.log('🌐 API Request:', config.method?.toUpperCase(), fullUrl)
+    console.log('📦 Base URL:', config.baseURL)
     return config
   },
   (error) => {
