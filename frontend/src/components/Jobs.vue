@@ -579,15 +579,28 @@ export default {
     async submitApplication() {
       try {
         this.submitting = true
-        // Simula envio da candidatura
-        await new Promise(resolve => setTimeout(resolve, 1500))
         
-        // Gera número de candidatura fictício
-        this.applicationNumber = 'CAND-' + Date.now().toString().slice(-6)
+        // Preparar dados da candidatura
+        const applicationData = {
+          jobId: this.selectedJob.id,
+          userId: 1, // TODO: Pegar do usuário logado quando autenticação estiver implementada
+          name: this.applicationForm.fullName,
+          email: this.applicationForm.email,
+          phone: this.applicationForm.phone,
+          countryOfOrigin: this.applicationForm.country,
+          experience: this.applicationForm.experience,
+          portugueseLevel: this.applicationForm.portugueseLevel,
+          skills: this.applicationForm.skills,
+          motivation: this.applicationForm.motivation,
+          hasDocumentation: this.applicationForm.documentationStatus === 'Documentação completa',
+          status: 'pending'
+        }
         
-        // Data de submissão
-        const now = new Date()
-        this.submissionDate = now.toLocaleDateString('pt-BR', {
+        // Enviar para o backend
+        const response = await api.post('/applications', applicationData)
+        
+        this.applicationNumber = response.data.applicationNumber
+        this.submissionDate = new Date(response.data.createdAt).toLocaleDateString('pt-BR', {
           day: '2-digit',
           month: '2-digit',
           year: 'numeric',
@@ -596,16 +609,10 @@ export default {
         })
         
         this.applicationSubmitted = true
-        
-        // Log dos dados (simulando envio para API)
-        console.log('Candidatura enviada:', {
-          job: this.selectedJob,
-          candidate: this.applicationForm,
-          applicationNumber: this.applicationNumber
-        })
       } catch (error) {
         console.error('Erro ao enviar candidatura:', error)
-        alert('Erro ao enviar candidatura. Tente novamente.')
+        const errorMsg = error.response?.data?.errors || error.response?.data?.error || 'Erro ao enviar candidatura. Tente novamente.'
+        alert(typeof errorMsg === 'string' ? errorMsg : JSON.stringify(errorMsg))
       } finally {
         this.submitting = false
       }

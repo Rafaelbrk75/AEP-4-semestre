@@ -7,6 +7,7 @@ INSERT INTO jobs (id, title, description, location) VALUES (2, 'Atendente', 'Ate
 
 INSERT INTO users (id, name, email, address, role) VALUES (1, 'Maria Beneficiaria', 'maria@example.com', 'Rua A, 123', 'beneficiary');
 INSERT INTO users (id, name, email, address, role) VALUES (2, 'Joao Doador', 'joao@example.com', 'Av B, 456', 'donor');
+-- Nota: Para criar um usuário administrador, use o formulário de cadastro e selecione "Administrador" como tipo de conta
 
 -- Exemplo de doação
 INSERT INTO donations (id, donor_id, beneficiary_id, items, status) VALUES (1, 2, 1, 'Cesta basica (arroz, feijao, óleo, macarrão)', 'sent');

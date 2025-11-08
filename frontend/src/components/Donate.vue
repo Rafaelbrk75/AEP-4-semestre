@@ -183,12 +183,21 @@ export default {
         return
       }
 
+      this.donating = true
       try {
-        this.donating = true
-        // Simulate donation process
-        await new Promise(resolve => setTimeout(resolve, 2000))
+        // Criar doação no backend
+        const donationData = {
+          items: `Doação de R$ ${this.amount},00`,
+          beneficiaryId: null, // Será atribuído pela ONG
+          donorId: null, // Pode ser anônimo ou buscar do usuário logado
+          ongId: this.selectedONG || null,
+          status: 'requested',
+          deliveryAddress: null
+        }
         
-        alert(`Obrigado pela sua doação de R$ ${this.amount},00!\n\nEsta é uma demonstração. Em produção, esta ação processaria o pagamento.`)
+        const response = await api.post('/donations', donationData)
+        
+        alert(`Doação de R$ ${this.amount},00 registrada com sucesso! ID: ${response.data.id}`)
         
         // Reset form
         this.amount = 100
@@ -197,7 +206,8 @@ export default {
         this.donorEmail = ''
       } catch (error) {
         console.error('Erro ao processar doação:', error)
-        alert('Erro ao processar doação. Tente novamente.')
+        const errorMsg = error.response?.data?.errors || error.response?.data?.error || 'Erro ao processar doação. Tente novamente.'
+        alert(typeof errorMsg === 'string' ? errorMsg : JSON.stringify(errorMsg))
       } finally {
         this.donating = false
       }
